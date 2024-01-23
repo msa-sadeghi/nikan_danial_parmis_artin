@@ -1,6 +1,7 @@
 import turtle
 import random
 import time
+import os
 screen = turtle.Screen()
 screen.bgcolor('black')
 screen.setup(600,600)
@@ -9,6 +10,12 @@ screen.tracer(False)
 screen.register_shape("strawberry.gif")
 
 score = 0
+if os.path.exists("snake_score.txt"):
+    f = open("snake_score.txt", "r")
+    highscore = int(f.read())
+else:
+    highscore = 0
+ 
 
 
 def create_turtle(s, c):
@@ -76,6 +83,9 @@ screen.onkeypress(go_left,"Left")
 
 
 def please_close_the_window():
+    f = open("snake_score.txt", "w")
+    f.write(str(highscore))
+    f.close()
     global running
     running = False
 
@@ -87,12 +97,18 @@ running = True
 while running:
     screen.update()
     scoreboard.clear()
-    scoreboard.write(f"Score: {score}", font=("arial", 26,"bold"), align="center")
+    scoreboard.write(f"Score: {score}, HighScore:{highscore}", font=("arial", 26,"bold"), align="center")
+
     if snake_head.distance(snake_food) < 20:
         change_position()
         score += 1
+        if score > highscore:
+            highscore = score
         new_tail = create_turtle("square", "darkgreen")
         all_tails.append(new_tail)
+
+
+
     for i in range(len(all_tails)-1, 0, -1):
         x = all_tails[i - 1].xcor()
         y = all_tails[i - 1].ycor()
