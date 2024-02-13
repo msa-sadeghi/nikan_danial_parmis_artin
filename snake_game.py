@@ -8,7 +8,7 @@ screen.bgcolor('black')
 screen.setup(600, 600)
 screen.tracer(False)
 
-screen.register_shape("strawberry.gif")
+# screen.register_shape("strawberry.gif")
 
 score = 0
 if os.path.exists("snake_score.txt"):
