@@ -25,10 +25,25 @@ while running:
             running = False
             
     keys = pygame.key.get_pressed()
-    if keys[pygame.K_UP]:
+    if keys[pygame.K_UP] and cat_rect.top > 0:
         cat_rect.y -= 5
+    if keys[pygame.K_DOWN] and cat_rect.bottom < SCREEN_HEIGHT:
+        cat_rect.y += 5
+    if keys[pygame.K_LEFT] and cat_rect.left > 0:
+        cat_rect.x -= 5
+    if keys[pygame.K_RIGHT] and cat_rect.right < SCREEN_WIDTH:
+        cat_rect.x += 5
+    
+    fish_rect.y -= 5
+    if fish_rect.top <= 0:
+        fish_rect.bottom = SCREEN_HEIGHT
+        fish_rect.centerx = random.randint(0, SCREEN_WIDTH)
+     
+    if cat_rect.colliderect(fish_rect)       :
+        fish_rect.bottom = SCREEN_HEIGHT
+        fish_rect.centerx = random.randint(0, SCREEN_WIDTH)
         
-    # سایر جهت ها
+    
     screen.fill((200,10,210))
     screen.blit(cat_img, cat_rect)
     screen.blit(fish_image, fish_rect)
