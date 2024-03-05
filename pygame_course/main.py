@@ -16,6 +16,11 @@ fish_rect.centerx = random.randint(0, SCREEN_WIDTH)
 
 FPS = 60
 clock = pygame.time.Clock()
+score = 0
+my_font = pygame.font.Font("assets/myfont.ttf")
+score_text = my_font.render(f"Score {score}", True, (255,255,240))
+score_rect = score_text.get_rect()
+score_rect.topleft = (0,10)
 
 
 running = True
@@ -23,7 +28,7 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-            
+    score_text = my_font.render(f"Score {score}", True, (255,255,240))       
     keys = pygame.key.get_pressed()
     if keys[pygame.K_UP] and cat_rect.top > 0:
         cat_rect.y -= 5
@@ -42,10 +47,12 @@ while running:
     if cat_rect.colliderect(fish_rect)       :
         fish_rect.bottom = SCREEN_HEIGHT
         fish_rect.centerx = random.randint(0, SCREEN_WIDTH)
+        score +=1
         
     
     screen.fill((200,10,210))
     screen.blit(cat_img, cat_rect)
     screen.blit(fish_image, fish_rect)
+    screen.blit(score_text, score_rect)
     pygame.display.update()
     clock.tick(FPS)
