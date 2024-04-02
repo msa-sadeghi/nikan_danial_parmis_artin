@@ -17,10 +17,23 @@ fish_rect.centerx = random.randint(0, SCREEN_WIDTH)
 FPS = 60
 clock = pygame.time.Clock()
 score = 0
+
+lives = 3
+dr_image = pygame.image.load("assets/dr.png")
+dr_image = pygame.transform.scale(dr_image, (72,72))
+dr_rect = dr_image.get_rect()
+dr_rect.bottom = SCREEN_HEIGHT
+dr_rect.centerx = random.randint(0, SCREEN_WIDTH)
+
+
 my_font = pygame.font.Font("assets/myfont.ttf", 48)
 score_text = my_font.render(f"Score {score}", True, (255,255,240))
 score_rect = score_text.get_rect()
 score_rect.topleft = (0,10)
+
+lives_text = my_font.render(f"Lives: {lives}", True, (255,10,123))
+lives_rect = lives_text.get_rect()
+lives_rect.topright = (SCREEN_WIDTH,10)
 
 pygame.mixer.music.load("assets/bg.mp3")
 pygame.mixer.music.set_volume(0.4)
@@ -41,6 +54,7 @@ while running:
         if event.type == pygame.QUIT:
             running = False
     score_text = my_font.render(f"Score {score}", True, (255,255,240)) 
+    lives_text = my_font.render(f"Lives: {lives}", True, (255,10,123))
     screen.fill((200,10,210)) 
     if pygame.time.get_ticks() - start_time < 3000:
         screen.blit(welcome_text, welcome_rect)   
@@ -56,15 +70,23 @@ while running:
             cat_rect.x += 5
         
         fish_rect.y -= 5
+        dr_rect.y -= 5
         if fish_rect.top <= 0:
             fish_rect.bottom = SCREEN_HEIGHT
             fish_rect.centerx = random.randint(0, SCREEN_WIDTH)
+        if dr_rect.top <= 0:
+            dr_rect.bottom = SCREEN_HEIGHT
+            dr_rect.centerx = random.randint(0, SCREEN_WIDTH)
         
         if cat_rect.colliderect(fish_rect)       :
             pick_sound.play()
             fish_rect.bottom = SCREEN_HEIGHT
             fish_rect.centerx = random.randint(0, SCREEN_WIDTH)
             score +=1
+        if cat_rect.colliderect(dr_rect):
+            lives -= 1
+            dr_rect.bottom = SCREEN_HEIGHT
+            dr_rect.centerx = random.randint(0, SCREEN_WIDTH)
             
     
     
@@ -72,6 +94,8 @@ while running:
     
         screen.blit(cat_img, cat_rect)
         screen.blit(fish_image, fish_rect)
+        screen.blit(dr_image, dr_rect)
         screen.blit(score_text, score_rect)
+        screen.blit(lives_text, lives_rect)
     pygame.display.update()
     clock.tick(FPS)
