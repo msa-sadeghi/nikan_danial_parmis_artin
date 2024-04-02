@@ -1,6 +1,28 @@
 import pygame
 import random
 pygame.init()
+
+
+def game_over():
+    global score, lives
+    game_over_text = my_font.render("Game Over, press Enter", True, (255,0,0))
+    game_over_rect = game_over_text.get_rect()
+    game_over_rect.center = (SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
+    screen.fill((10,230, 100))
+    screen.blit(game_over_text, game_over_rect)
+    pygame.display.update()
+    pygame.mixer.music.stop()
+    
+    paused = True
+    while paused:
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN:
+                    paused = False
+                    score = 0
+                    lives = 3
+                    pygame.mixer.music.play(-1)
+
 SCREEN_WIDTH = 1000
 SCREEN_HEIGHT = 700
 screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
@@ -89,7 +111,8 @@ while running:
             dr_rect.centerx = random.randint(0, SCREEN_WIDTH)
             
     
-    
+        if lives <= 0:
+            game_over()
     
     
         screen.blit(cat_img, cat_rect)
