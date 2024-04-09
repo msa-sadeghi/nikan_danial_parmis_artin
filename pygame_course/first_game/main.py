@@ -26,8 +26,10 @@ def game_over():
 SCREEN_WIDTH = 1000
 SCREEN_HEIGHT = 700
 screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT))
-cat_img = pygame.image.load("assets/cat.png")
+cat_leftimg = pygame.image.load("assets/cat.png")
 # cat_img = pygame.transform.scale( cat_img, (32,32))
+cat_rightimg = pygame.transform.flip(cat_leftimg, True, False)
+cat_img = cat_rightimg
 cat_rect = cat_img.get_rect()
 cat_rect.center = (SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
 
@@ -49,6 +51,7 @@ dr_rect.centerx = random.randint(0, SCREEN_WIDTH)
 
 
 my_font = pygame.font.Font("assets/myfont.ttf", 48)
+my_font72 = pygame.font.Font("assets/myfont.ttf", 72)
 score_text = my_font.render(f"Score {score}", True, (255,255,240))
 score_rect = score_text.get_rect()
 score_rect.topleft = (0,10)
@@ -88,8 +91,10 @@ while running:
             cat_rect.y += 5
         if keys[pygame.K_LEFT] and cat_rect.left > 0:
             cat_rect.x -= 5
+            cat_img = cat_leftimg
         if keys[pygame.K_RIGHT] and cat_rect.right < SCREEN_WIDTH:
             cat_rect.x += 5
+            cat_img = cat_rightimg
         
         fish_rect.y -= 5
         dr_rect.y -= 5
