@@ -15,6 +15,7 @@ while running:
                 running = False
     screen.fill((0,0,0))
     p.draw(screen)
+    p.move()
     p.animation()
     pygame.display.update()
     clock.tick(60)

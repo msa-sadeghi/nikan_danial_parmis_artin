@@ -1,6 +1,5 @@
 from pygame.sprite import Sprite
 import pygame
-
 class Player(Sprite):
     def __init__(self, x, y):
         super().__init__()
@@ -25,13 +24,23 @@ class Player(Sprite):
     
     def draw(self, screen):
         screen.blit(self.image, self.rect)
+    def move(self)    :
+        dx = 0
+        dy = 0
         
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_LEFT]:
+            dx -= 5
+        if keys[pygame.K_RIGHT]:
+            dx += 5
+        self.rect.x += dx
+            
     def animation(self):
-        self.image = self.run_images[self.image_number]
+        self.image = self.idle_images[self.image_number]
         if pygame.time.get_ticks() - self.update_time > 200:
             self.update_time = pygame.time.get_ticks()
             self.image_number += 1
-            if self.image_number >= len(self.run_images):
+            if self.image_number >= len(self.idle_images):
                 self.image_number = 0
             
             
