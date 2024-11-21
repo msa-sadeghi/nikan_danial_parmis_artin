@@ -1,5 +1,6 @@
 import pygame
 from pygame.time import Clock
+from player import Player
 pygame.init()
 
 screen_width = 800
@@ -12,12 +13,17 @@ sky_image = pygame.image.load("assets/sky.png")
 sky_rect = sky_image.get_rect()
 sky_rect.topleft = (0,0)
 
+my_player = Player(300, 300)
+
 running = True
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-    screen.blit(sky_image, sky_rect)        
+    screen.blit(sky_image, sky_rect)   
+    
+    my_player.draw(screen)
+         
     pygame.display.update()
     c.tick(FPS)
     
