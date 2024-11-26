@@ -10,7 +10,7 @@ FPS = 60
 c = Clock()
 
 sky_image = pygame.image.load("assets/sky.png")
-sky_rect = sky_image.get_rect()
+sky_rect = sky_image.get_rect() 
 sky_rect.topleft = (0,0)
 
 my_player = Player(300, 300)
@@ -23,7 +23,7 @@ while running:
     screen.blit(sky_image, sky_rect)   
     
     my_player.draw(screen)
-         
+    my_player.move()     
     pygame.display.update()
     c.tick(FPS)
     
