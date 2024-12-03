@@ -18,12 +18,38 @@ class Player(Sprite):
         self.rect = self.image.get_rect(topleft=(x,y))
         self.image_number = 0
         self.last_update_time = 0
+        self.direction = 1
+        self.idling = True
     def draw(self, screen):
         screen.blit(self.image, self.rect)
     def move(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_UP]:
             self.rect.y -= 5
+        elif keys[pygame.K_DOWN]:
+            self.rect.y += 5
+        elif keys[pygame.K_LEFT]:
+            self.rect.x -= 5
+            self.direction = -1
+            self.idling = False
+        elif keys[pygame.K_RIGHT]:
+            self.rect.x += 5
+            self.direction = 1
+            self.idling = False
+        elif not keys[pygame.K_LEFT] and not keys[pygame.K_RIGHT]:
+            self.idling = True          
+    def animation(self):
+        self.image = self.images[self.image_number]
+        if pygame.time.get_ticks() - self.last_update_time > 100:
+            self.last_update_time = pygame.time.get_ticks()
+            self.image_number += 1
+            if self.image_number >= len(self.images):
+                self.image_number = 0
+        if self.idling == True:
+            self.image_number = 0
+        
+        
+            
             
             
         

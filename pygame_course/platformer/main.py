@@ -23,7 +23,8 @@ while running:
     screen.blit(sky_image, sky_rect)   
     
     my_player.draw(screen)
-    my_player.move()     
+    my_player.move()   
+    my_player.animation()  
     pygame.display.update()
     c.tick(FPS)
     
