@@ -20,7 +20,9 @@ class Player(Sprite):
         self.last_update_time = 0
         self.direction = 1
         self.idling = True
+        self.flip = False #1
     def draw(self, screen):
+        self.image = pygame.transform.flip(self.image, self.flip, False) #2
         screen.blit(self.image, self.rect)
     def move(self):
         keys = pygame.key.get_pressed()
@@ -29,10 +31,12 @@ class Player(Sprite):
         elif keys[pygame.K_DOWN]:
             self.rect.y += 5
         elif keys[pygame.K_LEFT]:
+            self.flip = True#3
             self.rect.x -= 5
             self.direction = -1
             self.idling = False
         elif keys[pygame.K_RIGHT]:
+            self.flip = False#4
             self.rect.x += 5
             self.direction = 1
             self.idling = False
