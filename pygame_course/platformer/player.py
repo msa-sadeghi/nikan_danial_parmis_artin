@@ -21,6 +21,7 @@ class Player(Sprite):
         self.direction = 1
         self.idling = True
         self.flip = False #1
+        self.vel_y = 0
     def draw(self, screen):
         self.image = pygame.transform.flip(self.image, self.flip, False) #2
         screen.blit(self.image, self.rect)
@@ -41,7 +42,17 @@ class Player(Sprite):
             self.direction = 1
             self.idling = False
         elif not keys[pygame.K_LEFT] and not keys[pygame.K_RIGHT]:
-            self.idling = True          
+            self.idling = True  
+        
+    
+    def gravity(self):
+        dy = 0
+        self.vel_y += 1
+        dy += self.vel_y
+        self.rect.y  += dy
+        
+    
+                
     def animation(self):
         self.image = self.images[self.image_number]
         if pygame.time.get_ticks() - self.last_update_time > 100:
