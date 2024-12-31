@@ -22,15 +22,16 @@ class Player(Sprite):
         self.idling = True
         self.flip = False #1
         self.vel_y = 0
+        self.dx = 0
+        self.dy = 0
     def draw(self, screen):
         self.image = pygame.transform.flip(self.image, self.flip, False) #2
         screen.blit(self.image, self.rect)
     def move(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_UP]:
-            self.rect.y -= 5
-        elif keys[pygame.K_DOWN]:
-            self.rect.y += 5
+            self.vel_y = -11
+        
         elif keys[pygame.K_LEFT]:
             self.flip = True#3
             self.rect.x -= 5
@@ -46,12 +47,18 @@ class Player(Sprite):
         
     
     def gravity(self):
-        dy = 0
+        self.dy = 0
         self.vel_y += 1
-        dy += self.vel_y
-        self.rect.y  += dy
+        self.dy += self.vel_y
+        self.rect.y  += self.dy
         
-    
+    def check_collisions(self, world_data):
+        for tile in world_data:
+            if tile[1].colliderect(self.rect.x ,self.rect.y + self.dy, self.rect.size[0], self.rect.size[1]):
+                self.vel_y = 0
+                self.dy = tile[1].top - self.rect.bottom
+                self.rect.y  += self.dy
+        
                 
     def animation(self):
         self.image = self.images[self.image_number]
