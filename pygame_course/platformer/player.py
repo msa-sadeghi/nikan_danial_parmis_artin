@@ -22,43 +22,58 @@ class Player(Sprite):
         self.idling = True
         self.flip = False #1
         self.vel_y = 0
-        self.dx = 0
-        self.dy = 0
     def draw(self, screen):
         self.image = pygame.transform.flip(self.image, self.flip, False) #2
         screen.blit(self.image, self.rect)
-    def move(self):
+    def move(self, world_data):
+        dx = 0
+        dy = 0
         keys = pygame.key.get_pressed()
         if keys[pygame.K_UP]:
             self.vel_y = -11
         
         elif keys[pygame.K_LEFT]:
             self.flip = True#3
-            self.rect.x -= 5
+            dx -= 5
             self.direction = -1
             self.idling = False
         elif keys[pygame.K_RIGHT]:
             self.flip = False#4
-            self.rect.x += 5
+            dx += 5
             self.direction = 1
             self.idling = False
         elif not keys[pygame.K_LEFT] and not keys[pygame.K_RIGHT]:
             self.idling = True  
-        
-    
-    def gravity(self):
-        self.dy = 0
+            
         self.vel_y += 1
-        self.dy += self.vel_y
-        self.rect.y  += self.dy
+        dy += self.vel_y    
         
-    def check_collisions(self, world_data):
         for tile in world_data:
-            if tile[1].colliderect(self.rect.x ,self.rect.y + self.dy, self.rect.size[0], self.rect.size[1]):
-                self.vel_y = 0
-                self.dy = tile[1].top - self.rect.bottom
-                self.rect.y  += self.dy
+            if tile[1].colliderect(self.rect.x + dx,self.rect.y , self.rect.size[0], self.rect.size[1]):
+                dx = 0
+                self.rect.x += dx
+            if tile[1].colliderect(self.rect.x ,self.rect.y + dy, self.rect.size[0], self.rect.size[1]):
+                if self.vel_y > 0:
+                    self.vel_y = 0
+                    dy = tile[1].top - self.rect.bottom
+                    
+                else:
+                    self.vel_y = 0
+                    dy = tile[1].bottom - self.rect.top
         
+        
+           
+        self.rect.x += dx
+        self.rect.y  += dy
+    
+
+        
+        
+        
+        
+   
+        
+                    
                 
     def animation(self):
         self.image = self.images[self.image_number]

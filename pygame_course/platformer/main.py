@@ -38,9 +38,8 @@ while running:
     my_world.draw(screen)  
     if jumped == True:
         my_player.vel_y = -13
-    my_player.move()   
-    my_player.gravity()
-    my_player.check_collisions(my_world.world_data)
+    my_player.move(my_world.world_data)   
+    
     my_player.draw(screen)
     my_player.animation()  
     pygame.display.update()
