@@ -21,6 +21,7 @@ class Player(Sprite):
         self.direction = 1
         self.idling = True
         self.flip = False #1
+        self.in_air = False
         self.vel_y = 0
     def draw(self, screen):
         self.image = pygame.transform.flip(self.image, self.flip, False) #2
@@ -29,8 +30,9 @@ class Player(Sprite):
         dx = 0
         dy = 0
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_UP]:
-            self.vel_y = -11
+        if keys[pygame.K_UP] and self.in_air == False:
+            self.vel_y = -15
+            self.in_air = True
         
         elif keys[pygame.K_LEFT]:
             self.flip = True#3
@@ -56,13 +58,12 @@ class Player(Sprite):
                 if self.vel_y > 0:
                     self.vel_y = 0
                     dy = tile[1].top - self.rect.bottom
+                    self.in_air = False
                     
                 else:
                     self.vel_y = 0
                     dy = tile[1].bottom - self.rect.top
-        
-        
-           
+
         self.rect.x += dx
         self.rect.y  += dy
     

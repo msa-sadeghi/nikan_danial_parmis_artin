@@ -36,8 +36,7 @@ while running:
             
     screen.blit(sky_image, sky_rect) 
     my_world.draw(screen)  
-    if jumped == True:
-        my_player.vel_y = -13
+    
     my_player.move(my_world.world_data)   
     
     my_player.draw(screen)
