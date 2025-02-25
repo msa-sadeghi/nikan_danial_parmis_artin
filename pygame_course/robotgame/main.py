@@ -1,22 +1,21 @@
 import pygame
 from player import Player
-pygame.init()
-width  = 800
-height = 640
+
+width = 1000
+height = 600
+screen = pygame.display.set_mode((width, height))
 fps = 60
 clock = pygame.time.Clock()
-screen = pygame.display.set_mode((width, height))
 
 my_player = Player(100, 300)
 
-
 running = True
-while running:
+while running == True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-    screen.fill("black")
-    my_player.draw(screen)  
-    my_player.move()      
+    my_player.draw(screen)
     pygame.display.update()
     clock.tick(fps)
+
+
