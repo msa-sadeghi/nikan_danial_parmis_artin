@@ -14,7 +14,15 @@ while running == True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+    
+    if my_player.moving == True:
+        my_player.change_action('Run')
+    else:
+        my_player.change_action('Idle')
+
+    screen.fill("lightpink")
     my_player.draw(screen)
+    my_player.move()
     pygame.display.update()
     clock.tick(fps)
 

@@ -24,9 +24,11 @@ class Player(Sprite):
         self.frame_index  = 0
         self.action = "Idle"
         self.last_animation_time = pygame.time.get_ticks()
+        self.flip = False
+        self.moving = False
     def draw(self, screen):
         self.image = self.all_images[self.action][self.frame_index]
-        screen.blit(self.image, self.rect)
+        screen.blit(pygame.transform.flip(self.image, self.flip, False), self.rect)
         self.animation()
     
 
@@ -36,4 +38,27 @@ class Player(Sprite):
             if  self.frame_index >= len(self.all_images[self.action]):
                 self.frame_index = 0
             self.last_animation_time = pygame.time.get_ticks()
+
+    def change_action(self, new_action):
+        if self.action != new_action:
+            self.action = new_action
+            self.frame_index = 0
+
+    def move(self):
+        dx = 0
+        dy = 0
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_LEFT]:
+            self.flip = True
+            self.moving = True
+            dx -= 5
+        if keys[pygame.K_RIGHT]:
+            self.flip = False
+            self.moving = True
+            dx += 5
+
+        self.rect.x += dx
+        self.rect.y += dy
+        
+
 
