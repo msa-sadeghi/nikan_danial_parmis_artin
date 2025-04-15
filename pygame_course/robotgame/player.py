@@ -28,6 +28,8 @@ class Player(Sprite):
         self.moving = False
         self.yvelocity = 0
         self.jump = False
+        self.slide = False
+        self.direction = 1
     def draw(self, screen):
         self.image = self.all_images[self.action][self.frame_index]
         screen.blit(pygame.transform.flip(self.image, self.flip, False), self.rect)
@@ -54,22 +56,31 @@ class Player(Sprite):
             self.flip = True
             self.moving = True
             dx -= 5
+            self.direction = -1
         if keys[pygame.K_RIGHT]:
             self.flip = False
             self.moving = True
             dx += 5
+            self.direction = 1
         if not keys[pygame.K_LEFT] and not keys[pygame.K_RIGHT]:
             self.moving = False
 
         if keys[pygame.K_UP]:
             self.yvelocity = -10
-
+            self.jump = True
+        
+        if keys[pygame.K_DOWN]:
+            self.slide = True
+            dx += 5 *  self.direction
+        else:
+            self.slide = False
         dy += self.yvelocity
         self.yvelocity += 1
 
         if self.rect.bottom + dy >= 500:
             self.yvelocity = 0
             dy = 500 - self.rect.bottom
+            self.jump = False
             
 
         self.rect.x += dx

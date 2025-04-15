@@ -14,8 +14,11 @@ while running == True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-    
-    if my_player.moving == True:
+    if my_player.jump == True:
+        my_player.change_action('Jump')
+    elif my_player.slide == True:
+        my_player.change_action('Slide')
+    elif my_player.moving == True:
         my_player.change_action('Run')
     else:
         my_player.change_action('Idle')
