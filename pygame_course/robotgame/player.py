@@ -30,6 +30,8 @@ class Player(Sprite):
         self.jump = False
         self.slide = False
         self.direction = 1
+        self.shoot = False
+        self.melee = False
     def draw(self, screen):
         self.image = self.all_images[self.action][self.frame_index]
         screen.blit(pygame.transform.flip(self.image, self.flip, False), self.rect)
@@ -74,6 +76,17 @@ class Player(Sprite):
             dx += 5 *  self.direction
         else:
             self.slide = False
+
+        if keys[pygame.K_SPACE]:
+            self.shoot = True
+        else:
+            self.shoot = False
+
+        if keys[pygame.K_m]:
+            self.melee = True
+        else:
+            self.melee = False
+
         dy += self.yvelocity
         self.yvelocity += 1
 
