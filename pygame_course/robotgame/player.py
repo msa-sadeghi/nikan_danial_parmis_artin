@@ -1,6 +1,8 @@
 from pygame.sprite import Sprite
 import pygame
 import os
+
+from bullet import Bullet
 class Player(Sprite):
     def __init__(self, x,y):
         super().__init__()
@@ -98,6 +100,10 @@ class Player(Sprite):
 
         self.rect.x += dx
         self.rect.y += dy
+
+    def shooting(self, group):
+        if self.shoot:
+            Bullet(self.rect.x, self.rect.y, self.direction, group)
         
 
 
