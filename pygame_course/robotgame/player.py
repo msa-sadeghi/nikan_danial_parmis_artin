@@ -102,8 +102,9 @@ class Player(Sprite):
         self.rect.y += dy
 
     def shooting(self, group):
+        
         if self.shoot:
-            Bullet(self.rect.x, self.rect.y, self.direction, group)
+            Bullet(self.rect.centerx + self.direction * (self.rect.width - 70)//2, self.rect.y + 100, self.direction, group)
         
 
 

@@ -38,8 +38,9 @@ while running == True:
     my_player.draw(screen)
     my_player.move()
     my_player.shooting(player_bullet_group)
-    player_bullet_group.update()
-    player_bullet_group.draw(screen)
+    player_bullet_group.update(screen)
+    # player_bullet_group.draw(screen)
+ 
     pygame.display.update()
     clock.tick(fps)
 
