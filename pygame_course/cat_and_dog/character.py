@@ -20,8 +20,41 @@ class Character(Sprite):
         self.animation = "Idle"
         self.image = self.all_images[self.animation][self.frame_index]
         self.rect = self.image.get_rect(topleft=(x,y))
+        self.animation_time = pygame.time.get_ticks()
+        self.idle = True
     def draw(self, screen):
         screen.blit(self.image, self.rect)
+        self.do_animation()
+
+    def do_animation(self):
+        self.image = self.all_images[self.animation][self.frame_index]
+        if pygame.time.get_ticks() - self.animation_time > 100:
+            self.animation_time = pygame.time.get_ticks()
+            self.frame_index += 1
+            if self.frame_index >= len(self.all_images[self.animation]):
+                self.frame_index = 0
+
+    def move_horizontal(self):
+        dx = 0
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_LEFT]:
+            self.idle = False
+            dx -= 5
+        if keys[pygame.K_RIGHT]:
+            self.idle = False
+            dx += 5
+        if not keys[pygame.K_LEFT] and not keys[pygame.K_RIGHT]:
+            self.idle = True
+        self.rect.x += dx
+
+    def change_animation(self, new_animation):
+        if self.animation != new_animation:
+            self.animation = new_animation
+            self.frame_index = 0
+            self.animation_time = pygame.time.get_ticks()
+
+
+
 
 
 

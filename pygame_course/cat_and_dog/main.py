@@ -16,6 +16,13 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+
+    if my_cat.idle == False:
+        my_cat.change_animation("Walk")
+    elif my_cat.idle == True:
+        my_cat.change_animation("Idle")
+    screen.fill("lightpink")
     my_cat.draw(screen)
+    my_cat.move_horizontal()
     pygame.display.update()
     CLOCK.tick(FPS)
