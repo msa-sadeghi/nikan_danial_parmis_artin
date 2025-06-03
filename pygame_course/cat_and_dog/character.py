@@ -22,8 +22,10 @@ class Character(Sprite):
         self.rect = self.image.get_rect(topleft=(x,y))
         self.animation_time = pygame.time.get_ticks()
         self.idle = True
+        self.flip = False
     def draw(self, screen):
-        screen.blit(self.image, self.rect)
+        img = pygame.transform.flip(self.image, self.flip, False)
+        screen.blit(img, self.rect)
         self.do_animation()
 
     def do_animation(self):
@@ -39,9 +41,11 @@ class Character(Sprite):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
             self.idle = False
+            self.flip = True
             dx -= 5
         if keys[pygame.K_RIGHT]:
             self.idle = False
+            self.flip = False
             dx += 5
         if not keys[pygame.K_LEFT] and not keys[pygame.K_RIGHT]:
             self.idle = True
