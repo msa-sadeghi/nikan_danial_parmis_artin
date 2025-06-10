@@ -23,6 +23,9 @@ class Character(Sprite):
         self.animation_time = pygame.time.get_ticks()
         self.idle = True
         self.flip = False
+        self.slide = False
+        self.jump = False
+        self.yspeed = 0
     def draw(self, screen):
         img = pygame.transform.flip(self.image, self.flip, False)
         screen.blit(img, self.rect)
@@ -38,7 +41,23 @@ class Character(Sprite):
 
     def move_horizontal(self):
         dx = 0
+        dy = 0
         keys = pygame.key.get_pressed()
+        if keys[pygame.K_UP]:
+            self.jump = True
+            self.yspeed = -15
+        else:
+            self.jump = False
+        if keys[pygame.K_LEFT] and keys[pygame.K_DOWN]:
+            self.slide = True
+        elif not keys[pygame.K_LEFT] and not keys[pygame.K_DOWN]:
+            self.slide = False
+        if keys[pygame.K_RIGHT] and keys[pygame.K_DOWN]:
+            self.slide = True
+        elif not keys[pygame.K_RIGHT] and not keys[pygame.K_DOWN]:
+            self.slide = False
+
+
         if keys[pygame.K_LEFT]:
             self.idle = False
             self.flip = True
@@ -49,7 +68,14 @@ class Character(Sprite):
             dx += 5
         if not keys[pygame.K_LEFT] and not keys[pygame.K_RIGHT]:
             self.idle = True
+        
+        dy += self.yspeed
+        self.yspeed += 1
+        if self.rect.bottom + dy > 500:
+            dy = 500 - self.rect.bottom
+            self.yspeed = 0
         self.rect.x += dx
+        self.rect.y += dy
 
     def change_animation(self, new_animation):
         if self.animation != new_animation:

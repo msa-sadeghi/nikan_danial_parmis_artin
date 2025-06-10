@@ -16,8 +16,11 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-
-    if my_cat.idle == False:
+    if my_cat.jump:
+        my_cat.change_animation("Jump")
+    elif my_cat.slide:
+        my_cat.change_animation("Slide")
+    elif my_cat.idle == False:
         my_cat.change_animation("Walk")
     elif my_cat.idle == True:
         my_cat.change_animation("Idle")
