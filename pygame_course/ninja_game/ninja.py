@@ -25,3 +25,6 @@ class Ninja(Sprite):
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)
+
+    def move(self):
+        pass  
