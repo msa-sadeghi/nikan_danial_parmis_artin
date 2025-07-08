@@ -21,10 +21,38 @@ class Ninja(Sprite):
         self.frame_index = 0
         self.image = self.images[self.anim][self.frame_index]
         self.rect = self.image.get_rect(topleft= (x,y))
-            
+        self.direction = 1
+        self.update_time = pygame.time.get_ticks()
 
     def draw(self, screen):
-        screen.blit(self.image, self.rect)
+        self.animation()
+        screen.blit(
+            pygame.transform.flip(self.image, self.direction == -1, False), 
+            self.rect)
+    def animation(self):
+        if pygame.time.get_ticks() - self.update_time >= 100:
+            self.update_time = pygame.time.get_ticks()
+            self.frame_index += 1
+        if self.frame_index >= len(self.images[self.anim]):
+            self.frame_index = 0
+        self.image = self.images[self.anim][self.frame_index]  
+
+    def change_animation(self, anim_index):
+        if anim_index != self.anim:
+            self.anim = anim_index
+            self.frame_index = 0
 
     def move(self):
-        pass  
+        x_movement = 0  
+        y_movement = 0
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_LEFT]:
+            self.direction = -1
+            x_movement -= 5
+        if keys[pygame.K_RIGHT]:
+            self.direction = 1
+            x_movement += 5
+
+        self.rect.x += x_movement
+        self.rect.y += y_movement
+

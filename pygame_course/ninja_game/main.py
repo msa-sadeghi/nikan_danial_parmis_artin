@@ -18,6 +18,8 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+    screen.fill("lightpink")
     my_ninja.draw(screen)
+    my_ninja.move()
     pygame.display.update()
     CLOCK.tick(FPS)
