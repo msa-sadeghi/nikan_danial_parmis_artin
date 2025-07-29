@@ -23,6 +23,7 @@ class Ninja(Sprite):
         self.rect = self.image.get_rect(topleft= (x,y))
         self.direction = 1
         self.update_time = pygame.time.get_ticks()
+        self.moving_state = "Idle"
 
     def draw(self, screen):
         self.animation()
@@ -47,12 +48,15 @@ class Ninja(Sprite):
         y_movement = 0
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT]:
+            self.moving_state = "Moving"
             self.direction = -1
             x_movement -= 5
         if keys[pygame.K_RIGHT]:
+            self.moving_state = "Moving"
             self.direction = 1
             x_movement += 5
-
+        if not keys[pygame.K_LEFT] and not keys[pygame.K_RIGHT]:
+            self.moving_state = "Idle"
         self.rect.x += x_movement
         self.rect.y += y_movement
 
