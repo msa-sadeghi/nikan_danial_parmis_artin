@@ -21,6 +21,16 @@ def show_menu():
     start_button.draw(screen)
     if start_button.handle_click():
         game_started = True
+
+def show_environment():
+    for i in range(4):
+        screen.blit()
+
+
+scroll = 0
+scroll_left, scroll_right = (False, False)
+
+
 running = True
 while running:
     for event in pygame.event.get():
