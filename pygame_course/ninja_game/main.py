@@ -21,10 +21,11 @@ def show_menu():
     start_button.draw(screen)
     if start_button.handle_click():
         game_started = True
-
+bg_image = pygame.image.load("./BG.png")
+bg_image = pygame.transform.scale(bg_image, (WIDTH, HEIGHT))
 def show_environment():
     for i in range(4):
-        screen.blit()
+        screen.blit(bg_image, (0,0))
 
 
 scroll = 0
@@ -40,6 +41,7 @@ while running:
     if game_started == False:
         show_menu()
     else:
+        show_environment()
         if my_ninja.moving_state == "Moving":
             my_ninja.change_animation(8)
         elif my_ninja.moving_state == "Idle":
