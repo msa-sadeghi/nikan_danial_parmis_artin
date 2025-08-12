@@ -24,6 +24,7 @@ class Ninja(Sprite):
         self.direction = 1
         self.update_time = pygame.time.get_ticks()
         self.moving_state = "Idle"
+        self.y_speed = 0
 
     def draw(self, screen):
         self.animation()
@@ -57,6 +58,11 @@ class Ninja(Sprite):
             x_movement += 5
         if not keys[pygame.K_LEFT] and not keys[pygame.K_RIGHT]:
             self.moving_state = "Idle"
+
+        if keys[pygame.K_UP]:
+            self.y_speed = -14
+        y_movement += self.y_speed
+        self.y_speed += 1
         self.rect.x += x_movement
         self.rect.y += y_movement
 
