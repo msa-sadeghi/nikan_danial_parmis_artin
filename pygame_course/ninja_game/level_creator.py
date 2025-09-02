@@ -11,6 +11,10 @@ BOTTOM_MARGIN = 100
 screen = pygame.display.set_mode((WIDTH + SIDE_MARGIN, HEIGHT + BOTTOM_MARGIN))
 CLOCK = pygame.time.Clock()
 FPS = 60
+scroll = 0
+
+scroll_left = False
+scroll_right = False
 
 world_data = []
 for i  in range(ROWS):
@@ -27,8 +31,23 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_LEFT:
+                scroll_left = True
+            if event.key == pygame.K_RIGHT:
+                scroll_right = True
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_LEFT:
+                scroll_left = False
+            if event.key == pygame.K_RIGHT:
+                scroll_right = False
+
+    if scroll_left and scroll > 0:
+        scroll -= 5
+    if scroll_right:
+        scroll += 5
     screen.fill("lightpink")
-    draw_grid(screen, ROWS, COLS, TILE_SIZE, WIDTH, HEIGHT)
+    draw_grid(screen, ROWS, COLS, TILE_SIZE, WIDTH, HEIGHT, scroll)
     draw_tiles()
     pygame.draw.rect(screen, "lightgreen", (WIDTH, 0, SIDE_MARGIN, HEIGHT + BOTTOM_MARGIN))
     pygame.draw.rect(screen, "lightgreen", (0, HEIGHT, SIDE_MARGIN + WIDTH, BOTTOM_MARGIN))
@@ -42,6 +61,8 @@ while running:
             
     if pygame.mouse.get_pressed()[0] and mouse_position[0] < WIDTH and mouse_position[1] < HEIGHT:
         world_data[row][col] = current_btn       
+    if pygame.mouse.get_pressed()[2] and mouse_position[0] < WIDTH and mouse_position[1] < HEIGHT:
+        world_data[row][col] = -1       
     pygame.draw.rect(screen, "red", all_buttons[current_btn].rect, 3)
     pygame.display.update()
     CLOCK.tick(FPS)
