@@ -26,6 +26,13 @@ def draw_tiles():
             if world_data[i][j] != -1:
                 screen.blit(all_images[world_data[i][j]], (j * TILE_SIZE - scroll, i * TILE_SIZE))
 current_btn = 0
+
+current_level = 1
+font = pygame.font.SysFont('arial', 30)
+current_level_text = font.render(f"level:{current_level}", True, "red")
+
+
+
 running = True
 while running:
     for event in pygame.event.get():
@@ -64,5 +71,8 @@ while running:
     if pygame.mouse.get_pressed()[2] and mouse_position[0] < WIDTH and mouse_position[1] < HEIGHT:
         world_data[row][col] = -1       
     pygame.draw.rect(screen, "red", all_buttons[current_btn].rect, 3)
+
+
+    screen.blit(current_level_text, (10, HEIGHT + 20))
     pygame.display.update()
     CLOCK.tick(FPS)
