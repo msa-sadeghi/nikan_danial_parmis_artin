@@ -42,6 +42,7 @@ while running:
             
     if pygame.mouse.get_pressed()[0] and mouse_position[0] < WIDTH and mouse_position[1] < HEIGHT:
         world_data[row][col] = current_btn       
+        
     pygame.draw.rect(screen, "red", all_buttons[current_btn].rect, 3)
     pygame.display.update()
     CLOCK.tick(FPS)
