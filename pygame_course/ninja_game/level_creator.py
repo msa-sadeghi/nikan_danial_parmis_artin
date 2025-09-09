@@ -33,6 +33,10 @@ current_level_text = font.render(f"level:{current_level}", True, "red")
 
 
 
+
+
+
+
 running = True
 while running:
     for event in pygame.event.get():
