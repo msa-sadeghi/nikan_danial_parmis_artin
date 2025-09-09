@@ -33,9 +33,19 @@ current_level_text = font.render(f"level:{current_level}", True, "red")
 
 
 
+up_arrow_image = pygame.image.load("./buttons/arrow.png")
+up_arrow_image = pygame.transform.scale(up_arrow_image , (50,50))
+down_arrow_image = pygame.image.load("./buttons/down_arrow.png")
+down_arrow_image = pygame.transform.scale(down_arrow_image , (50,50))
+load_image = pygame.image.load("./buttons/load.png")
+load_image = pygame.transform.scale(load_image , (50,50))
+save_image = pygame.image.load("./buttons/save.png")
+save_image = pygame.transform.scale(save_image , (50,50))
 
 
 
+up_arrow_button = Button(up_arrow_image,  150, HEIGHT + 40)
+down_arrow_button = Button(down_arrow_image,  200, HEIGHT + 40)
 
 running = True
 while running:
@@ -78,5 +88,15 @@ while running:
 
 
     screen.blit(current_level_text, (10, HEIGHT + 20))
+    up_arrow_button.draw(screen)
+    down_arrow_button.draw(screen)
+    if up_arrow_button.handle_click():
+        if current_level < 10:
+            current_level += 1
+    if down_arrow_button.handle_click():
+        if current_level > 1:
+            current_level -= 1
+
+    current_level_text = font.render(f"level:{current_level}", True, "red")
     pygame.display.update()
     CLOCK.tick(FPS)
