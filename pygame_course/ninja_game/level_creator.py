@@ -24,7 +24,7 @@ def draw_tiles():
     for i in range(len(world_data)):
         for j in range(len(world_data[i])):
             if world_data[i][j] != -1:
-                screen.blit(all_images[world_data[i][j]], (j * TILE_SIZE, i * TILE_SIZE))
+                screen.blit(all_images[world_data[i][j]], (j * TILE_SIZE - scroll, i * TILE_SIZE))
 current_btn = 0
 running = True
 while running:
@@ -52,7 +52,7 @@ while running:
     pygame.draw.rect(screen, "lightgreen", (WIDTH, 0, SIDE_MARGIN, HEIGHT + BOTTOM_MARGIN))
     pygame.draw.rect(screen, "lightgreen", (0, HEIGHT, SIDE_MARGIN + WIDTH, BOTTOM_MARGIN))
     mouse_position = pygame.mouse.get_pos()
-    col = mouse_position[0] // TILE_SIZE
+    col = (mouse_position[0] + scroll) // TILE_SIZE
     row = mouse_position[1] // TILE_SIZE
     for i,btn in enumerate(all_buttons):
         btn.draw(screen)
